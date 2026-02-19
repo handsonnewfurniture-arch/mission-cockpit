@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hands On Movers - Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a0f00 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ========================================
+           TOP SECTION: HANDS ON MOVERS COCKPIT
+           ======================================== */
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .ho-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            background: rgba(255, 140, 0, 0.05);
+            border: 2px solid rgba(255, 140, 0, 0.3);
+            border-radius: 20px;
+        }
+
+        .ho-header h1 {
+            font-size: 3rem;
+            background: linear-gradient(90deg, #ff8c00, #ff4500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #ffaa55;
+            font-size: 1.3rem;
+        }
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .system-card {
+            background: rgba(255, 140, 0, 0.05);
+            border: 2px solid rgba(255, 140, 0, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .system-card:hover {
+            border-color: #ff8c00;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 140, 0, 0.3);
+        }
+
+        .system-icon { font-size: 3rem; margin-bottom: 20px; }
+
+        .system-title {
+            color: #ff8c00;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .system-description {
+            color: #cccccc;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        .interface-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff8c00, #ff4500);
+            color: #000000;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 140, 0, 0.1);
+            color: #ff8c00;
+            border: 2px solid rgba(255, 140, 0, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 140, 0, 0.2);
+            border-color: #ff8c00;
+        }
+
+        .btn-icon { font-size: 1.2rem; }
+
+        .features-list {
+            list-style: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 140, 0, 0.2);
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            color: #ffaa55;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .features-list li::before {
+            content: '\2713';
+            position: absolute;
+            left: 0;
+            color: #ff8c00;
+            font-weight: bold;
+        }
+
+        .quick-access {
+            background: rgba(255, 140, 0, 0.1);
+            border: 2px solid #ff8c00;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .quick-access h2 {
+            color: #ff8c00;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-link {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .quick-link:hover {
+            border-color: #ff8c00;
+            background: rgba(255, 140, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .quick-link-title {
+            color: #ff8c00;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .quick-link-desc {
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        .ho-badge {
+            display: inline-block;
+            background: rgba(255, 140, 0, 0.3);
+            color: #ff8c00;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .ho-badge-new {
+            background: #ff4500;
+            color: #ffffff;
+        }
+
+        /* Comparison table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #ffffff;
+        }
+
+        .comparison-table thead tr { background: rgba(255, 140, 0, 0.2); }
+        .comparison-table th { padding: 15px; text-align: left; color: #ff8c00; }
+        .comparison-table th:not(:first-child) { text-align: center; }
+        .comparison-table td { padding: 15px; }
+        .comparison-table td:not(:first-child) { text-align: center; }
+        .comparison-table tr { border-bottom: 1px solid rgba(255, 140, 0, 0.2); }
+        .comparison-table tr:last-child { border-bottom: none; }
+
+        /* ========================================
+           DIVIDER
+           ======================================== */
+
+        .section-divider {
+            max-width: 1400px;
+            margin: 60px auto 0;
+            padding: 0 20px;
+        }
+
+        .divider-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff41, transparent);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+
+        /* ========================================
+           BOTTOM SECTION: MISSION COCKPIT
+           ======================================== */
+
+        .mc-section {
+            background: linear-gradient(180deg, rgba(0, 15, 0, 0.4) 0%, rgba(0, 10, 0, 0.8) 100%);
+            position: relative;
+        }
+
+        /* Scanline overlay for mission section */
+        .mc-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 65, 0.012) 2px,
+                rgba(0, 255, 65, 0.012) 4px
+            );
+            pointer-events: none;
+        }
+
+        .mc-header {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+
+        .mc-header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff41;
+            letter-spacing: 0.3em;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.4), 0 0 40px rgba(0, 255, 65, 0.1);
+            margin-bottom: 0.5rem;
+        }
+
+        .mc-meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #5a8a5a;
+            margin-bottom: 1rem;
+        }
+
+        .mc-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        .mc-stat-label { color: #5a8a5a; }
+        .mc-stat-value { color: #00ff41; font-weight: 600; }
+
+        .mc-overall-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mc-overall-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mc-overall-fill {
+            height: 100%;
+            background: #00ff41;
+            border-radius: 5px;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+        }
+
+        /* Mission Grid */
+        .mc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 1024px) {
+            .mc-grid { grid-template-columns: repeat(2, 1fr); }
+            .systems-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .mc-grid { grid-template-columns: 1fr; padding: 1rem; }
+            .ho-header h1 { font-size: 2rem; }
+            .quick-links { grid-template-columns: 1fr; }
+        }
+
+        /* Mission Panel */
+        .mc-panel {
+            background: rgba(0, 20, 0, 0.6);
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .mc-panel:hover {
+            border-color: rgba(0, 255, 65, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.08);
+        }
+
+        .mc-panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mc-panel-icon { font-size: 1.3rem; }
+
+        .mc-panel-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #00ff41;
+        }
+
+        .mc-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 3px;
+            letter-spacing: 0.05em;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
+        .mc-badge-progress { background: rgba(255, 170, 0, 0.15); color: #ffaa00; border: 1px solid rgba(255, 170, 0, 0.3); }
+        .mc-badge-critical { background: rgba(255, 51, 51, 0.15); color: #ff3333; border: 1px solid rgba(255, 51, 51, 0.3); animation: mc-pulse-badge 2s ease-in-out infinite; }
+        .mc-badge-complete { background: rgba(0, 255, 65, 0.15); color: #00ff41; border: 1px solid rgba(0, 255, 65, 0.3); }
+
+        @keyframes mc-pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .mc-panel-desc {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            color: #5a8a5a;
+            margin: 0.5rem 0 1rem;
+        }
+
+        .mc-panel-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .mc-panel-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .mc-panel-bar-fill {
+            height: 100%;
+            background: #00ff41;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+            box-shadow: 0 0 6px rgba(0, 255, 65, 0.4);
+        }
+
+        .mc-panel-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #00ff41;
+            white-space: nowrap;
+        }
+
+        /* Toggle */
+        .mc-toggle-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            border-radius: 4px;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            padding: 0.4rem 0.7rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s ease;
+        }
+
+        .mc-toggle-btn:hover { background: rgba(0, 255, 65, 0.05); }
+
+        .mc-chevron {
+            transition: transform 0.3s ease;
+            font-size: 0.7rem;
+        }
+
+        .mc-chevron.open { transform: rotate(90deg); }
+
+        /* Task list */
+        .mc-task-list {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease;
+        }
+
+        .mc-task-list.open { max-height: 800px; }
+
+        .mc-task-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.55rem 0.3rem;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.06);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            color: #c0c0c0;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            user-select: none;
+        }
+
+        .mc-task-item:hover { background: rgba(0, 255, 65, 0.03); }
+        .mc-task-item:last-child { border-bottom: none; }
+
+        .mc-task-check {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid rgba(0, 255, 65, 0.4);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s ease, border-color 0.2s ease;
+            font-size: 0.65rem;
+            color: transparent;
+        }
+
+        .mc-task-item.done .mc-task-check {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: #00ff41;
+            color: #00ff41;
+        }
+
+        .mc-task-label { flex: 1; line-height: 1.3; }
+        .mc-task-item.done .mc-task-label { text-decoration: line-through; color: #3a5a3a; }
+
+        /* Priority dots */
+        .mc-priority {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .mc-pri-critical { background: #ff3333; animation: mc-pulse-dot 1.5s ease-in-out infinite; box-shadow: 0 0 6px rgba(255, 51, 51, 0.6); }
+        .mc-pri-high { background: #ffaa00; }
+        .mc-pri-medium { background: #00ff41; }
+        .mc-pri-low { background: #555; }
+
+        @keyframes mc-pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        /* Footer */
+        .mc-footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: #3a5a3a;
+            border-top: 1px solid rgba(0, 255, 65, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         TOP: HANDS ON MOVERS COCKPIT
+         ============================================ -->
+    <div class="container">
+        <div class="ho-header">
+            <h1>Moving Systems Dashboard</h1>
+            <p class="subtitle">Choose your system to get started</p>
+        </div>
+
+        <div class="systems-grid">
+            <!-- Storage Unit System -->
+            <div class="system-card">
+                <div class="system-icon">🏢</div>
+                <h2 class="system-title">Storage Unit Planner</h2>
+                <p class="system-description">
+                    Help customers find the perfect storage unit size to maximize space and save money. Analyze how items fit and provide size recommendations.
+                </p>
+                <div class="interface-buttons">
+                    <a href="storage-unified-interface.html" class="btn btn-primary">
+                        <span>🎯 Unified Interface (Recommended)</span>
+                        <span class="btn-icon">⭐</span>
+                    </a>
+                    <a href="storage-customer-interface.html" class="btn btn-secondary">
+                        <span>Customer Setup Only</span>
+                        <span class="btn-icon">👤</span>
+                    </a>
+                    <a href="storage-worker-interface.html" class="btn btn-secondary">
+                        <span>Worker Loading Only</span>
+                        <span class="btn-icon">👷</span>
+                    </a>
+                </div>
+                <ul class="features-list">
+                    <li>Size recommendations to save money</li>
+                    <li>3D space utilization analysis</li>
+                    <li>Test 6 different sizes (5x5 to 10x30)</li>
+                    <li>Visual layout planning</li>
+                    <li>Cost optimization suggestions</li>
+                </ul>
+            </div>
+
+            <!-- Pod System -->
+            <div class="system-card">
+                <div class="system-icon">📦</div>
+                <h2 class="system-title">
+                    Pod System
+                    <span class="ho-badge ho-badge-new">MULTI-UNIT</span>
+                </h2>
+                <p class="system-description">
+                    Distribute items across multiple portable storage containers (PODS, U-Pack). Supports 7ft, 12ft, and 16ft containers.
+                </p>
+                <div class="interface-buttons">
+                    <a href="pod-customer-interface.html" class="btn btn-primary">
+                        <span>Customer Setup</span>
+                        <span class="btn-icon">👤</span>
+                    </a>
+                    <a href="pod-worker-interface.html" class="btn btn-secondary">
+                        <span>Worker Loading Guide</span>
+                        <span class="btn-icon">👷</span>
+                    </a>
+                </div>
+                <ul class="features-list">
+                    <li>Multiple pods per job</li>
+                    <li>Smart item distribution (Balanced, Room-based, Priority)</li>
+                    <li>Weight tracking per pod</li>
+                    <li>Pod-specific loading sequences</li>
+                    <li>3 container sizes (7ft, 12ft, 16ft)</li>
+                </ul>
+            </div>
+
+            <!-- Equipment Checklist System -->
+            <div class="system-card">
+                <div class="system-icon">✓</div>
+                <h2 class="system-title">Equipment Checklist</h2>
+                <p class="system-description">
+                    Pre-move equipment verification system for Colorado dispatch crews. Ensure all required equipment is loaded before departure.
+                </p>
+                <div class="interface-buttons">
+                    <a href="equipment-checklist-system.html" class="btn btn-primary">
+                        <span>Open Checklist</span>
+                        <span class="btn-icon">📋</span>
+                    </a>
+                    <a href="https://darling-biscotti-aded81.netlify.app" target="_blank" class="btn btn-secondary">
+                        <span>Live Demo (Netlify)</span>
+                        <span class="btn-icon">🌐</span>
+                    </a>
+                </div>
+                <ul class="features-list">
+                    <li>12 essential equipment items</li>
+                    <li>Progress tracking bar</li>
+                    <li>Fragile items protocol</li>
+                    <li>Aurora &amp; Lakewood crew support</li>
+                    <li>Mobile-optimized interface</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Quick Access Section -->
+        <div class="quick-access">
+            <h2>Quick Access</h2>
+            <div class="quick-links">
+                <a href="storage-unified-interface.html" class="quick-link" style="border: 2px solid #ff8c00;">
+                    <div class="quick-link-title">⭐ Storage Unified</div>
+                    <div class="quick-link-desc">All-in-one customer + worker interface</div>
+                </a>
+                <a href="storage-customer-interface.html" class="quick-link">
+                    <div class="quick-link-title">🏢 Storage Planner</div>
+                    <div class="quick-link-desc">Find the right storage unit size</div>
+                </a>
+                <a href="storage-worker-interface.html" class="quick-link">
+                    <div class="quick-link-title">👷 Storage Worker</div>
+                    <div class="quick-link-desc">Load storage unit step-by-step</div>
+                </a>
+                <a href="pod-customer-interface.html" class="quick-link">
+                    <div class="quick-link-title">📦 Pod Customer</div>
+                    <div class="quick-link-desc">Configure multiple pods</div>
+                </a>
+                <a href="pod-worker-interface.html" class="quick-link">
+                    <div class="quick-link-title">👷 Pod Worker</div>
+                    <div class="quick-link-desc">Load multiple pods</div>
+                </a>
+                <a href="equipment-checklist-system.html" class="quick-link">
+                    <div class="quick-link-title">✓ Equipment Check</div>
+                    <div class="quick-link-desc">Pre-move equipment verification</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Developer Resources -->
+        <div class="quick-access" style="margin-top: 30px;">
+            <h2>Developer Resources</h2>
+            <div class="quick-links">
+                <div class="quick-link" onclick="showFileInfo('storage-schema.sql')">
+                    <div class="quick-link-title">📄 Storage Database Schema</div>
+                    <div class="quick-link-desc">hands-on-dispatch/database/storage-schema.sql</div>
+                </div>
+                <div class="quick-link" onclick="showFileInfo('storage-optimizer.js')">
+                    <div class="quick-link-title">⚙️ Storage Optimizer</div>
+                    <div class="quick-link-desc">hands-on-dispatch/api/storage-optimizer.js</div>
+                </div>
+                <div class="quick-link" onclick="showFileInfo('storage-routes.js')">
+                    <div class="quick-link-title">🔌 Storage API</div>
+                    <div class="quick-link-desc">hands-on-dispatch/api/storage-routes.js</div>
+                </div>
+                <div class="quick-link" onclick="showFileInfo('pod-schema.sql')">
+                    <div class="quick-link-title">📄 Pod Database Schema</div>
+                    <div class="quick-link-desc">hands-on-dispatch/database/pod-schema.sql</div>
+                </div>
+                <div class="quick-link" onclick="showFileInfo('pod-optimizer.js')">
+                    <div class="quick-link-title">⚙️ Pod Optimizer</div>
+                    <div class="quick-link-desc">hands-on-dispatch/api/pod-optimizer.js</div>
+                </div>
+                <div class="quick-link" onclick="showFileInfo('pod-routes.js')">
+                    <div class="quick-link-title">🔌 Pod API</div>
+                    <div class="quick-link-desc">hands-on-dispatch/api/pod-routes.js</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Comparison -->
+        <div class="quick-access" style="margin-top: 30px;">
+            <h2>System Comparison</h2>
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Storage Unit</th>
+                            <th>Pod System</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Number of Units</td><td>Single unit</td><td>Multiple pods</td></tr>
+                        <tr><td>Distribution Method</td><td>N/A</td><td>Balanced, Room-based, Priority</td></tr>
+                        <tr><td>Size Options</td><td>5x5 to 10x30</td><td>7ft, 12ft, 16ft</td></tr>
+                        <tr><td>Weight Tracking</td><td>Basic</td><td>Per-pod limits enforced</td></tr>
+                        <tr><td>Worker Interface</td><td>Single unit view</td><td>Multi-pod selector</td></tr>
+                        <tr><td>Purpose</td><td>Size planning &amp; cost optimization</td><td>Multi-pod loading &amp; distribution</td></tr>
+                        <tr><td>Use Case</td><td>Help customers rent right-sized units</td><td>Portable moving containers</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================
+         DIVIDER
+         ============================================ -->
+    <div class="section-divider">
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- ============================================
+         BOTTOM: MISSION COCKPIT
+         ============================================ -->
+    <div class="mc-section">
+        <div class="mc-header">
+            <h2>MISSION COCKPIT</h2>
+            <div class="mc-meta" id="mc-datetime"></div>
+            <div class="mc-stats">
+                <span><span class="mc-stat-label">Missions: </span><span class="mc-stat-value">3</span></span>
+                <span><span class="mc-stat-label">Tasks: </span><span class="mc-stat-value" id="mc-overall-done">0</span><span class="mc-stat-label">/31 Done</span></span>
+                <div class="mc-overall-wrap">
+                    <div class="mc-overall-bar"><div class="mc-overall-fill" id="mc-overall-fill" style="width:0%"></div></div>
+                    <span class="mc-stat-value" id="mc-overall-pct">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mc-grid" id="mc-grid"></div>
+
+        <div class="mc-footer">MISSION COCKPIT v1.0 &mdash; Overkor Tek</div>
+    </div>
+
+    <script>
+        // ---- Hands On Movers: Dev Resources ----
+        function showFileInfo(filename) {
+            const fileMap = {
+                'storage-schema.sql': 'Storage database schema with 8 tables, 3 views, and SQL functions for volume calculation and overlap checking.',
+                'storage-optimizer.js': 'Storage space optimization service with 3D bin packing algorithm and zone-based strategies.',
+                'storage-routes.js': 'RESTful API endpoints for storage unit CRUD operations, optimization, and inventory management.',
+                'pod-schema.sql': 'Pod database schema with 8 tables supporting multiple pods per job with weight tracking.',
+                'pod-optimizer.js': 'Multi-pod optimization with balanced, room-based, and priority-based distribution methods.',
+                'pod-routes.js': 'RESTful API endpoints for pod operations including bulk creation and multi-pod optimization.'
+            };
+            alert(filename + '\n\n' + fileMap[filename] + '\n\nFile location: hands-on-dispatch/');
+        }
+
+        // ---- Mission Cockpit ----
+        var MISSIONS = [
+            {
+                id: 'blitztigerclaw',
+                icon: '\u{1F42F}',
+                name: 'BlitzTigerClaw',
+                desc: 'Python framework \u2014 CLI toolkit',
+                status: 'IN PROGRESS',
+                tasks: [
+                    { label: 'Create test suite (pytest)', priority: 'high' },
+                    { label: 'Setup GitHub Actions CI/CD', priority: 'high' },
+                    { label: 'Fix egg-info version (0.2.0 \u2192 0.4.0)', priority: 'medium' },
+                    { label: 'Publish to TestPyPI', priority: 'high' },
+                    { label: 'Publish to PyPI', priority: 'high' },
+                    { label: 'Add type hints / mypy', priority: 'medium' },
+                    { label: 'Write Sphinx documentation', priority: 'low' },
+                    { label: 'Build multi-platform wheels', priority: 'low' },
+                    { label: 'Document Tiger AI setup', priority: 'low' }
+                ]
+            },
+            {
+                id: 'taxlien',
+                icon: '\u{1F3DB}\uFE0F',
+                name: 'Tax Lien Platform',
+                desc: 'Investment research \u2014 FastAPI + Next.js',
+                status: 'IN PROGRESS',
+                tasks: [
+                    { label: 'Commit WIP frontend code', priority: 'high' },
+                    { label: 'Setup PostgreSQL database (Railway)', priority: 'high' },
+                    { label: 'Run Alembic migrations', priority: 'high' },
+                    { label: 'Test all 10 FastAPI routers', priority: 'high' },
+                    { label: 'Wire frontend pages to backend API', priority: 'high' },
+                    { label: 'Configure Netlify for Next.js deploy', priority: 'medium' },
+                    { label: 'Deploy backend to Railway', priority: 'medium' },
+                    { label: 'Implement user authentication', priority: 'high' },
+                    { label: 'Setup Stripe payment processing', priority: 'medium' },
+                    { label: 'End-to-end testing', priority: 'low' }
+                ]
+            },
+            {
+                id: 'handson',
+                icon: '\u{1F69A}',
+                name: 'Hands On Dispatch',
+                desc: 'Moving co dispatch \u2014 SMS + scheduling',
+                status: 'CRITICAL',
+                tasks: [
+                    { label: 'COMMIT 8,900 lines of uncommitted code', priority: 'critical' },
+                    { label: 'Deploy all 6 database schemas to Railway', priority: 'high' },
+                    { label: 'Configure Twilio SMS credentials', priority: 'high' },
+                    { label: 'Configure environment variables', priority: 'high' },
+                    { label: 'Test SMS dispatch workflow', priority: 'high' },
+                    { label: 'Test floor plan designer', priority: 'medium' },
+                    { label: 'Test storage/pod optimization', priority: 'medium' },
+                    { label: 'Test QR label generation', priority: 'medium' },
+                    { label: 'Deploy backend to Railway', priority: 'high' },
+                    { label: 'Deploy admin dashboard to Netlify', priority: 'high' },
+                    { label: 'Deploy customer dashboard to Netlify', priority: 'medium' },
+                    { label: 'End-to-end testing', priority: 'low' }
+                ]
+            }
+        ];
+
+        var MC_STORAGE_KEY = 'mission-cockpit-state';
+
+        function mcLoadState() {
+            try { return JSON.parse(localStorage.getItem(MC_STORAGE_KEY)) || {}; }
+            catch(e) { return {}; }
+        }
+
+        function mcSaveState(state) {
+            localStorage.setItem(MC_STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function mcGetChecked(state, mid, idx) {
+            return !!(state[mid] && state[mid][idx]);
+        }
+
+        function mcToggleTask(state, mid, idx) {
+            if (!state[mid]) state[mid] = {};
+            state[mid][idx] = !state[mid][idx];
+            mcSaveState(state);
+        }
+
+        function mcCountDone(state, mission) {
+            var count = 0;
+            mission.tasks.forEach(function(_, i) { if (mcGetChecked(state, mission.id, i)) count++; });
+            return count;
+        }
+
+        function mcUpdateDateTime() {
+            var now = new Date();
+            var opts = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZoneName: 'short' };
+            document.getElementById('mc-datetime').textContent = now.toLocaleString('en-US', opts);
+        }
+
+        function mcRender() {
+            var state = mcLoadState();
+            var grid = document.getElementById('mc-grid');
+            grid.innerHTML = '';
+
+            var totalDone = 0;
+            var totalTasks = 0;
+
+            MISSIONS.forEach(function(mission) {
+                var done = mcCountDone(state, mission);
+                var total = mission.tasks.length;
+                totalDone += done;
+                totalTasks += total;
+                var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+                var allDone = done === total;
+
+                var badgeClass, badgeText;
+                if (allDone) {
+                    badgeClass = 'mc-badge-complete';
+                    badgeText = 'COMPLETE';
+                } else if (mission.status === 'CRITICAL') {
+                    badgeClass = 'mc-badge-critical';
+                    badgeText = 'CRITICAL';
+                } else {
+                    badgeClass = 'mc-badge-progress';
+                    badgeText = 'IN PROGRESS';
+                }
+
+                var panel = document.createElement('div');
+                panel.className = 'mc-panel';
+                panel.innerHTML =
+                    '<div class="mc-panel-header">' +
+                        '<span class="mc-panel-icon">' + mission.icon + '</span>' +
+                        '<span class="mc-panel-title">' + mission.name + '</span>' +
+                        '<span class="mc-badge ' + badgeClass + '">' + badgeText + '</span>' +
+                    '</div>' +
+                    '<div class="mc-panel-desc">' + mission.desc + '</div>' +
+                    '<div class="mc-panel-progress">' +
+                        '<div class="mc-panel-bar"><div class="mc-panel-bar-fill" style="width:' + pct + '%"></div></div>' +
+                        '<span class="mc-panel-count">' + done + '/' + total + '</span>' +
+                    '</div>' +
+                    '<button class="mc-toggle-btn" data-mission="' + mission.id + '">' +
+                        '<span class="mc-chevron" id="mc-chev-' + mission.id + '">&#9654;</span>' +
+                        'Tasks (' + total + ')' +
+                    '</button>' +
+                    '<div class="mc-task-list" id="mc-tasks-' + mission.id + '">' +
+                        mission.tasks.map(function(t, i) {
+                            var checked = mcGetChecked(state, mission.id, i);
+                            return '<div class="mc-task-item' + (checked ? ' done' : '') + '" data-mission="' + mission.id + '" data-idx="' + i + '">' +
+                                '<div class="mc-task-check">' + (checked ? '\u2713' : '') + '</div>' +
+                                '<span class="mc-task-label">' + t.label + '</span>' +
+                                '<span class="mc-priority mc-pri-' + t.priority + '"></span>' +
+                            '</div>';
+                        }).join('') +
+                    '</div>';
+                grid.appendChild(panel);
+            });
+
+            var overallPct = totalTasks > 0 ? Math.round((totalDone / totalTasks) * 100) : 0;
+            document.getElementById('mc-overall-done').textContent = totalDone;
+            document.getElementById('mc-overall-fill').style.width = overallPct + '%';
+            document.getElementById('mc-overall-pct').textContent = overallPct + '%';
+        }
+
+        // Event delegation for mission cockpit
+        document.getElementById('mc-grid').addEventListener('click', function(e) {
+            var toggleBtn = e.target.closest('.mc-toggle-btn');
+            if (toggleBtn) {
+                var mid = toggleBtn.dataset.mission;
+                var list = document.getElementById('mc-tasks-' + mid);
+                var chev = document.getElementById('mc-chev-' + mid);
+                list.classList.toggle('open');
+                chev.classList.toggle('open');
+                return;
+            }
+
+            var taskItem = e.target.closest('.mc-task-item');
+            if (taskItem) {
+                var state = mcLoadState();
+                var missionId = taskItem.dataset.mission;
+                var idx = parseInt(taskItem.dataset.idx, 10);
+                mcToggleTask(state, missionId, idx);
+                mcRender();
+            }
+        });
+
+        // Init
+        mcUpdateDateTime();
+        setInterval(mcUpdateDateTime, 1000);
+        mcRender();
+    </script>
+</body>
+</html>
