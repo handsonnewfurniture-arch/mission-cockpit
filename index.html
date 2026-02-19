@@ -1489,6 +1489,7 @@
                     <span class="w-icon">💼</span> Business Finance
                     <div class="widget-head-right">
                         <button class="ops-btn" id="hcp-sync-btn" onclick="hcpSync()" style="font-size:0.65rem;padding:0.25rem 0.6rem;display:none;">Sync HCP</button>
+                        <button class="ops-btn" id="hcp-cust-sync-btn" onclick="hcpSyncCustomers()" style="font-size:0.65rem;padding:0.25rem 0.6rem;display:none;">Sync Customers</button>
                         <button class="ops-btn" id="hcp-connect-btn" onclick="hcpConnect()" style="font-size:0.65rem;padding:0.25rem 0.6rem;">Connect HCP</button>
                     </div>
                 </div>
@@ -2731,6 +2732,7 @@ if(hcpKey){
     document.getElementById('hcp-connect-btn').style.borderColor='var(--green)';
     document.getElementById('hcp-connect-btn').style.color='var(--green)';
     document.getElementById('hcp-sync-btn').style.display='inline-flex';
+    document.getElementById('hcp-cust-sync-btn').style.display='inline-flex';
 }
 
 function hcpConnect(){
@@ -2742,6 +2744,7 @@ function hcpConnect(){
     document.getElementById('hcp-connect-btn').style.borderColor='var(--green)';
     document.getElementById('hcp-connect-btn').style.color='var(--green)';
     document.getElementById('hcp-sync-btn').style.display='inline-flex';
+    document.getElementById('hcp-cust-sync-btn').style.display='inline-flex';
 }
 
 async function hcpSync(){
@@ -2751,7 +2754,7 @@ async function hcpSync(){
     var imported=0;
     try{
         // --- Import invoices as income ---
-        var resp=await fetch('/.netlify/functions/hcp-proxy?endpoint=invoices&page_size=50',{
+        var resp=await fetch('/api/hcp/invoices?page_size=50',{
             headers:{'x-hcp-key':hcpKey}
         });
         var data=await resp.json();
@@ -2777,7 +2780,7 @@ async function hcpSync(){
 
         // --- Import jobs into cockpit_jobs ---
         try{
-            var jResp=await fetch('/.netlify/functions/hcp-proxy?endpoint=jobs&page_size=50',{
+            var jResp=await fetch('/api/hcp/jobs?page_size=50',{
                 headers:{'x-hcp-key':hcpKey}
             });
             var jData=await jResp.json();
@@ -2817,8 +2820,26 @@ async function hcpSync(){
     btn.disabled=false;
 }
 
+// ========== HCP CUSTOMER → COMMS SYNC ==========
+async function hcpSyncCustomers(){
+    if(!hcpKey){hcpConnect();return;}
+    try{
+        var resp=await fetch('/api/hcp/sync-customers',{
+            method:'POST',
+            headers:{'x-hcp-key':hcpKey,'Content-Type':'application/json'}
+        });
+        var result=await resp.json();
+        if(resp.ok){
+            console.log('HCP customers synced:',result);
+            commsRenderChannels();
+        }else{
+            console.error('HCP customer sync error:',result.error);
+        }
+    }catch(err){console.error('HCP customer sync error:',err);}
+}
+
 // Auto-sync HCP on load if key is present
-if(hcpKey)setTimeout(hcpSync,3000);
+if(hcpKey)setTimeout(function(){hcpSync();hcpSyncCustomers();},3000);
 
 // =============================================
 // INVESTMENT TRACKER — Supabase-backed
